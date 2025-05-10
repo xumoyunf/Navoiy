@@ -27,7 +27,6 @@ class AuthorScreen extends StatelessWidget {
               itemCount: authors.length,
               itemBuilder: (context, index) {
                 Color cardColor;
-
                 switch (authors[index].category) {
                   case Category.dotsent:
                     cardColor = btnColor;
@@ -46,8 +45,16 @@ class AuthorScreen extends StatelessWidget {
                     title: Text(authors[index].name),
                     subtitle: Text(authors[index].description),
                     trailing: ClipRRect(
-                        borderRadius: BorderRadius.circular(50),
-                        child: Image.asset('assets/images/navoiy.png')),
+                      borderRadius: BorderRadius.circular(50),
+                      child: SizedBox(
+                        width: 50,
+                        height: 50,
+                        child: Image.asset(
+                          'assets/images/3.jpg',
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
                   ),
                 );
               }),

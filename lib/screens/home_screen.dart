@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:navoiy/data/data.dart';
+import 'package:navoiy/models/author_model.dart';
 import 'package:navoiy/models/data_model.dart';
 import 'package:navoiy/service/data_service.dart';
 import 'package:navoiy/utils/colors.dart';
@@ -63,10 +65,7 @@ class HomeScreen extends StatelessWidget {
                           data: data,
                           onTap: () {
                             Navigator.of(context)
-                                .pushNamed('/chapter', arguments: [
-                              data.title,
-                              data.data.map((e) => Data.fromJson(e)).toList()
-                            ]);
+                                .pushNamed('/chapter', arguments: [data.title, data.data]);
                           });
                     }),
               ),
@@ -74,8 +73,8 @@ class HomeScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Item(
-                  data:
-                      Data(title: 'Mualliflar', data: DataService().getAuthors()),
+                  author:
+                      Author(name: 'Mualliflar', category: Category.student, description: 'Mualliflar'),
                   onTap: () {
                     Navigator.pushNamed(context, '/authors',
                         arguments: DataService().getAuthors());
@@ -93,9 +92,10 @@ class HomeScreen extends StatelessWidget {
 }
 
 class Item extends StatelessWidget {
-  const Item({super.key, required this.data, this.onTap});
+  const Item({super.key, this.data, this.onTap, this.author});
 
-  final Data data;
+  final Data? data;
+  final Author? author;
   final Function()? onTap;
 
   @override
@@ -110,7 +110,7 @@ class Item extends StatelessWidget {
           color: gold,
           child: Center(
             child: Text(
-              data.title,
+              data?.title?? author?.name ?? "",
               style: smallTextStyle(color: dark),
             ),
           ),
